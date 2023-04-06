@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style3.css"/>
+    <title>Product Categories</title>
+  </head>
+  <body>
+    <div id="categories">
+      <button onclick="filterProduct('ALL')">ALL</button>
+      <button onclick="filterProduct('Topwear')">Topwear</button>
+      <button onclick="filterProduct('Watch')">Watch</button>
+      <button onclick="filterProduct('Bottomwear')">Bottomwear</button>
+      <button onclick="filterProduct('Jacket')">Jacket</button>
+    </div>
+    <div id="products"></div>
+
+    <script>
+      let products = {
+        data: [
+          {
+            productName: "Regular White Shirt",
+            category: "Topwear",
+            price: "350",
+            image: "shirt.jpg"
+          },
+          {
+            productName: "Women Skirt",
+            category: "Bottomwear",
+            price: "299",
+            image: "skirt.jpg"
+          },
+          {
+            productName: "Trendy watch",
+            category: "Watch",
+            price: "1580",
+            image: "image2.jpg"
+          },
+          {
+            productName: "Designer Skirt",
+            category: "Bottomwear",
+            price: "678",
+            image: "design.jpg"
+          },
+          {
+            productName: "Men Jacket",
+            category: "Jacket",
+            price: "3500",
+            image: "jack.jpg"
+          },
+          {
+            productName: "Normal Pant",
+            category: "Bottomwear",
+            price: "678",
+            image: "pant.jpg"
+          },
+        ]
+      };
+
+      for (let i of products.data) {
+        let card = document.createElement("div");
+        card.classList.add("card", `${i.category}`, "hide");
+        let imgContainer = document.createElement("div");
+        imgContainer.classList.add("image-container");
+        let image = document.createElement("img");
+        image.setAttribute("src", i.image);
+        imgContainer.appendChild(image);
+        card.appendChild(imgContainer);
+
+        let container = document.createElement("div");
+        container.classList.add("container");
+
+        let name = document.createElement("h5");
+        name.classList.add("product-name");
+        name.innerText = i.productName.toUpperCase();
+        container.appendChild(name);
+        let price = document.createElement("h6");
+        price.innerText = "Rs" + i.price;
+        container.appendChild(price)
+        card.appendChild(container);
+        document.getElementById("products").appendChild(card);
+      }
+
+      function filterProduct(value) {
+        let cards = document.querySelectorAll(".card");
+        Array.from(cards).forEach((card) => {
+          if (value === "ALL") {
+            card.classList.remove("hide");
+          } else {
+            if (card.classList.contains(value)) {
+              card.classList.remove("hide");
+            } else {
+              card.classList.add("hide");
+            }
+          }
+        });
+
+        let buttons = document.querySelectorAll("#categories button");
+        Array.from(buttons).forEach((button) => {
+          if (value === "ALL") {
+            buttons.forEach(btn => btn.classList.remove("active"));
+          } else if (value === button.innerText.toUpperCase()) {
+            button.classList.add("active");
+          } else {
+            button.classList.remove("active");
+          }
+        });
+      }
+
+      window.onload = () => {
+        filterProduct("ALL");
+      }
+    </script>
+  </body>
+</html>
